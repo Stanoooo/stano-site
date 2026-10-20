@@ -1,50 +1,237 @@
 
-<!DOCTYPE html><html lang="sk"><head>
-<meta charset="UTF-8"><title>Hudba & videá</title>
-<link rel="stylesheet" href="../css/style.css">
-</head><body>
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hudba & videá – Stano Petrov</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .album-player {
+      max-width: 760px;
+      margin: 30px auto 55px;
+      padding: 25px;
+      background: #1b1b1b;
+      color: white;
+      border-radius: 16px;
+      box-sizing: border-box;
+    }
+    .album-header {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+    .album-cover {
+      width: 190px;
+      max-width: 42%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .album-header h2 {
+      font-size: 32px;
+      margin: 8px 0;
+    }
+    .album-header p {
+      color: #bbb;
+    }
+    .track {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 13px 10px;
+      border-bottom: 1px solid #383838;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .track:hover, .track.active {
+      background: #343434;
+    }
+    .track-number {
+      width: 25px;
+      color: #aaa;
+    }
+    .track-title {
+      flex: 1;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 25px;
+    }
+    .controls button {
+      background: #fff;
+      color: #111;
+      border: 0;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      margin: 0 9px;
+      cursor: pointer;
+      font-size: 19px;
+    }
+    .controls button:hover {
+      background: #ddd;
+    }
+    #albumAudio {
+      width: 100%;
+      margin-top: 20px;
+    }
+    .now-playing {
+      text-align: center;
+      margin-top: 15px;
+      color: #ddd;
+    }
+    .videos-heading {
+      margin-top: 45px;
+    }
+    @media (max-width: 550px) {
+      .album-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .album-cover {
+        max-width: 100%;
+        width: 220px;
+      }
+      .album-player {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
 <nav>
-<a href="../index.html">Domov</a>
-<a href="o-mne.html">O mne</a>
-<a href="hudba.html">Hudba & videá</a>
-<a href="galeria.html">Galéria</a>
-<a href="kontakt.html">Kontakt</a>
+  <a href="../index.html">Domov</a>
+  <a href="o-mne.html">O mne</a>
+  <a href="hudba.html">Hudba & videá</a>
+  <a href="galeria.html">Galéria</a>
+  <a href="kontakt.html">Kontakt</a>
 </nav>
+
 <div class="page">
-<h1>Hudba & videá</h1>
-<div class="video-grid">
-<iframe src="https://www.youtube.com/embed/yafQ7jzsVUo"></iframe>
-<iframe src="https://www.youtube.com/embed/rwF1UseThyo"></iframe>
-<iframe src="https://www.youtube.com/embed/xP4Jzc3FH1A"></iframe>
-<iframe src="https://www.youtube.com/embed/Cl-ojWSqYa4"></iframe>
+  <h1>Hudba & videá</h1>
+
+  <div class="album-player">
+    <div class="album-header">
+      <img class="album-cover"
+           src="../img/biograf_cover_3000x3000-copy.png"
+           alt="Obal albumu Biograf">
+      <div>
+        <p>STANO PETROV</p>
+        <h2>BIOGRAF</h2>
+        <p>Album · 8 piesní</p>
+      </div>
+    </div>
+
+    <div id="trackList"></div>
+
+    <p class="now-playing" id="nowPlaying">
+      Pripravené na prehrávanie
+    </p>
+
+    <div class="controls">
+      <button id="previous" aria-label="Predchádzajúca skladba">⏮</button>
+      <button id="playPause" aria-label="Prehrať alebo pozastaviť">▶</button>
+      <button id="next" aria-label="Nasledujúca skladba">⏭</button>
+    </div>
+
+    <audio id="albumAudio" controls preload="metadata"></audio>
+  </div>
+
+  <h2 class="videos-heading">Videoklipy</h2>
+
+  <div class="video-grid">
+    <iframe src="https://www.youtube.com/embed/yafQ7jzsVUo"
+            title="Videoklip 1" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/rwF1UseThyo"
+            title="Videoklip 2" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/xP4Jzc3FH1A"
+            title="Videoklip 3" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/Cl-ojWSqYa4"
+            title="Videoklip 4" allowfullscreen></iframe>
+  </div>
 </div>
 
-<h2>Moje piesne</h2>
-<div class="music-list">
-  <p>1. Prízraky</p>
-  <audio controls src="../music/01.Prízraky-mp3.mp3"></audio>
+<script>
+const songs = [
+  { title: "Prízraky", file: "01.Prízraky-mp3.mp3" },
+  { title: "S.O.S.", file: "02.S.O.S-mp3.mp3" },
+  { title: "Kopla si do kamery", file: "03.Kopla_si_do_kamery-mp3.mp3" },
+  { title: "Airbus", file: "04.Airbus-mp3.mp3" },
+  { title: "Soliter", file: "05.Soliter-mp3.mp3" },
+  { title: "Žena života", file: "06.Zena_zivota-mp3.mp3" },
+  { title: "Pláž", file: "07.Pláž-mp3.mp3" },
+  { title: "Nebo", file: "08.Nebo-mp3.mp3" }
+];
 
-  <p>2. S.O.S.</p>
-  <audio controls src="../music/02.S.O.S-mp3.mp3"></audio>
+const audio = document.getElementById("albumAudio");
+const trackList = document.getElementById("trackList");
+const nowPlaying = document.getElementById("nowPlaying");
+const playPause = document.getElementById("playPause");
+let currentTrack = 0;
 
-  <p>3. Kopla si do kamery</p>
-  <audio controls src="../music/03.Kopla_si_do_kamery-mp3.mp3"></audio>
+songs.forEach((song, index) => {
+  const item = document.createElement("div");
+  item.className = "track";
+  item.innerHTML =
+    '<span class="track-number">' + (index + 1) + '.</span>' +
+    '<span class="track-title">' + song.title + '</span>' +
+    '<span>▶</span>';
+  item.addEventListener("click", () => {
+    loadTrack(index);
+    audio.play();
+  });
+  trackList.appendChild(item);
+});
 
-  <p>4. Airbus</p>
-  <audio controls src="../music/04.Airbus-mp3.mp3"></audio>
+function loadTrack(index) {
+  currentTrack = index;
+  audio.src = "../music/" + encodeURIComponent(songs[index].file);
+  nowPlaying.textContent = "Prehráva sa: " + songs[index].title;
+  document.querySelectorAll(".track").forEach((item, i) => {
+    item.classList.toggle("active", i === index);
+  });
+}
 
-  <p>5. Soliter</p>
-  <audio controls src="../music/05.Soliter-mp3.mp3"></audio>
+function nextTrack() {
+  loadTrack((currentTrack + 1) % songs.length);
+  audio.play();
+}
 
-  <p>6. Žena života</p>
-  <audio controls src="../music/06.Zena_zivota-mp3.mp3"></audio>
+function previousTrack() {
+  loadTrack((currentTrack - 1 + songs.length) % songs.length);
+  audio.play();
+}
 
-  <p>7. Pláž</p>
-  <audio controls src="../music/07.Pláž-mp3.mp3"></audio>
+document.getElementById("next").addEventListener("click", nextTrack);
+document.getElementById("previous").addEventListener("click", previousTrack);
 
-  <p>8. Nebo</p>
-  <audio controls src="../music/08.Nebo-mp3.mp3"></audio>
-</div>
+playPause.addEventListener("click", () => {
+  if (audio.paused) audio.play();
+  else audio.pause();
+});
 
-</div>
-</body></html>
+audio.addEventListener("play", () => {
+  playPause.textContent = "⏸";
+});
+
+audio.addEventListener("pause", () => {
+  playPause.textContent = "▶";
+});
+
+audio.addEventListener("ended", () => {
+  if (currentTrack < songs.length - 1) {
+    nextTrack();
+  } else {
+    playPause.textContent = "▶";
+    nowPlaying.textContent = "Album BIOGRAF dohral";
+  }
+});
+
+loadTrack(0);
+nowPlaying.textContent = "Pripravené na prehrávanie";
+</script>
+
+</body>
+</html>
