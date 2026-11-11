@@ -13,22 +13,61 @@ body { background:#000; color:white; font-family:Montserrat, sans-serif; margin:
 .buybtn { display:inline-block; margin-top:20px; background:#2d8cff; padding:15px 30px; 
           border-radius:8px; text-decoration:none; color:white; font-size:20px;}
 .buybtn:hover { background:#1a6cd9;}
+
+.products {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.product {
+  width: 360px;
+  text-align: center;
+}
+.product img {
+  width: 320px;
+  max-width: 100%;
+  border-radius: 10px;
+}
+.product h2 {
+  font-size: 26px;
+}
+
 </style>
 </head>
 <body>
-<div class="shop-container">
-    <h1>CD – Album COMBAIN</h1>
-    <img src="12x12_cover_COMBAJN_final_1400x1400.jpg">
-    <div class="price">13 €</div>
-   <script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
 
-<stripe-buy-button
-  buy-button-id="buy_btn_1TXSVBKEc2Z1NeK3OUOwWjWj"
-  publishable-key="pk_live_51PdHgSKEc2Z1NeK3YLvRo0w7IcAjRUp5LaGpCAZ5Aei8UfAM2DxWDuDhGXrY2TECPxDWSmjXOuhZO1Y4k5Mb44qM00JVIy6va0"
->
-</stripe-buy-button>
+<div class="shop-container">
+  <h1>Moje albumy</h1>
+
+  <div class="products">
+
+    <div class="product">
+      <h2>CD – Album COMBAJN</h2>
+      <img src="12x12_cover_COMBAJN_final_1400x1400.jpg" alt="Combajn">
+      <div class="price">13 €</div>
+      <stripe-buy-button
+        buy-button-id="buy_btn_1TXSVBKEc2Z1NeK3OUOwWjWj"
+        publishable-key="pk_live_51PdHgSKEc2Z1NeK3YLvRo0w7IcAjRUp5LaGpCAZ5Aei8UfAM2DxWDuDhGXrY2TECPxDWSmjXOuhZO1Y4k5Mb44qM00JVIy6va0">
+      </stripe-buy-button>
+    </div>
+
+    <div class="product">
+      <h2>CD – Album BIOGRAF</h2>
+      <img src="121x119_cover_BIOGRAF_petrov.jpg" alt="Biograf">
+      <div class="price">15 €</div>
+      <stripe-buy-button
+        buy-button-id="buy_btn_1UakjPKEc2Z1NeK3H1GLrx5W"
+        publishable-key="pk_live_51PdHgSKEc2Z1NeK3YLvRo0w7IcAjRUp5LaGpCAZ5Aei8UfAM2DxWDuDhGXrY2TECPxDWSmjXOuhZO1Y4k5Mb44qM00JVIy6va0">
+      </stripe-buy-button>
+    </div>
+
+  </div>
 </div>
-</body>
+
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    </div>
+</div>
+<script async src="https://js.stripe.com/v3/buy-button.js"></script></body>
 </html>
